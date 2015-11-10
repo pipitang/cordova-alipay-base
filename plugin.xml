@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        id="cordova-alipay-base"
+        version="0.0.1">
+
+  <name>Alipay Basic Mobile Payment Plugin</name>
+  <license>MIT license</license>
+  <description>阿里支付移动支付Cordova插件</description>
+  <keywords>cordova alipay 阿里支付 支付宝</keywords>
+  <repo>https://github.com/pipitang/cordova-alipay-base</repo>
+  <issue>https://github.com/pipitang/cordova-alipay-base/issues</issue>
+
+  <engines>
+    <engine name="cordova" version=">=3.5.0"/>
+  </engines>
+
+  <preference name="ALI_PID"/>
+
+  <js-module src="www/alipay.base.js" name="Base">
+    <clobbers target="Alipay" />
+  </js-module>
+
+
+  <platform name="ios">
+    <config-file target="config.xml" parent="/*">
+      <feature name="AlipayBase">
+        <param name="ios-package" value="CDVAlipay" />
+        <param name="onload" value="true" />
+      </feature>
+      <preference name="ALI_PID" value="$ALI_PID" />
+    </config-file>
+
+    <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+        <array>
+            <dict>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                    <string>$ALI_PID</string>
+                </array>
+            </dict>
+        </array>
+    </config-file>
+
+    <header-file src="src/ios/CDVAlipayBase.h"/>
+    <source-file src="src/ios/CDVAlipayBase.m"/>
+    
+    <resouce-file src="src/ios/lib/AlipaySDK.bundle" />
+    <framework src="src/ios/lib/AlipaySDK.framework" custom="true" />
+    
+    <framework src="CoreTelephony.framework" weak="true" />
+    <framework src="Security.framework" weak="true" />
+    <framework src="SystemConfiguration.framework" weak="true" />
+  </platform>
+  
+  <platform name="android">
+      <config-file target="res/xml/config.xml" parent="/*">
+          <feature name="AlipayBase">
+              <param name="android-package" value="org.apache.cordova.alipay.base.AliPay"/>
+              <param name="onload" value="true" />
+          </feature>
+      </config-file>
+      
+      <config-file target="AndroidManifest.xml" parent="/manifest/application">
+          <activity android:name="com.alipay.sdk.app.H5PayActivity"
+              android:configChanges="orientation|keyboardHidden|navigation"
+              android:exported="false" android:screenOrientation="behind"
+              android:windowSoftInputMode="adjustResize|stateHidden">
+          </activity>
+      </config-file>
+      
+      <config-file target="AndroidManifest.xml" parent="/manifest">
+          <uses-permission android:name="android.permission.INTERNET" />
+          <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+          <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+          <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+          <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+      </config-file>
+      
+      <source-file src="src/android/AliPay.java" target-dir="src/org/apache/cordova/alipay/base"/>
+      <source-file src="src/android/libs/alipaySdk-20151103.jar" target-dir="libs"/>
+  </platform>
+
+</plugin>

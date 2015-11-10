@@ -1,0 +1,24 @@
+{
+    "version": "0.0.1",
+    "name": "cordova-alipay-base",
+    "cordova_name": "Alipay Basic Mobile Payment Plugin",
+    "description": "阿里支付移动支付Cordova插件",
+    "license": "MIT license",
+    "repo": "https://github.com/pipitang/cordova-alipay-base",
+    "issue": "https://github.com/pipitang/cordova-alipay-base/issues",
+    "keywords": [
+        "alipay",
+        "阿里支付",
+	"支付宝"
+    ],
+    "platforms": [
+        "android",
+        "ios"
+    ],
+    "engines": [
+        {
+            "name": "cordova",
+            "version": ">=3.5.0"
+        }
+    ]
+}
