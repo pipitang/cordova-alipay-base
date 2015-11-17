@@ -52,7 +52,7 @@ public class AliPay extends CordovaPlugin {
             public void run() {
                 try {
                     String callString = buildCallString(arguments, callbackContext);
-                    Log.d(TAG, "Calling Alipay with: ");
+                    Log.d(TAG, "Calling Alipay with: " + callString);
                     PayTask task = new PayTask(cordova.getActivity());
                     // 调用支付接口，获取支付结果
                     final String rawResult = task.pay(callString);
