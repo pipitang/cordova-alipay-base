@@ -56,7 +56,7 @@ public class AliPay extends CordovaPlugin {
             @Override
             public void run() {
                 try {
-                    Log.d(TAG, "Calling Alipay with: ");
+                    Log.d(TAG, "Calling Alipay with: " + parameters);
                     PayTask task = new PayTask(cordova.getActivity());
                     // 调用支付接口，获取支付结果
                     final String rawResult = task.pay(parameters);
@@ -86,7 +86,7 @@ public class AliPay extends CordovaPlugin {
             String key = itr.next();
             if (TextUtils.isEmpty(key)) continue;;
             if ("sign".equals(key) || "sign_type".equals(key)) continue;;
-            keys.add(itr.next());
+            keys.add(key);
         }
 
         //Let's sort the order info and attach sign & sign_type to the end
