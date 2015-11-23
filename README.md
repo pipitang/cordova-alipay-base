@@ -39,7 +39,31 @@ Alipay.Base.pay({
 });
 ```
 
-此处第一个参数为json对象，请从服务端获取，直接传给改方法。具体服务端参数合成，请参照阿里相关文档。
+此处第一个参数为json对象，请从服务端获取，直接传给改方法。具体服务端参数合成，请参照阿里相关文档。客户端会对服务端返回的JSON对象属性进行排序，js层不需要关心。另外，服务端返回支付字符串时，除了签名顺序一致以外，合成的key=value是要带双引号的，这点比较坑爹，害了我调试半天。可参照一下代码:
+
+```
+	public static String createLinkString(Map<String, String> params, boolean client) {
+		List<String> keys = new ArrayList<String>(params.keySet());
+		Collections.sort(keys);
+
+		StringBuffer buf = new StringBuffer();
+
+		for (int i = 0; i < keys.size(); i++) {
+			String key = keys.get(i);
+			String value = params.get(key);
+			buf.append(key).append('=');
+			if (client) buf.append('"');
+			buf.append(value); 
+			if (client) buf.append('"');
+			buf.append('&');
+		}
+
+		buf.deleteCharAt(buf.length()-1);
+		return buf.toString();
+	}
+
+```
+
 
 # FAQ
 
