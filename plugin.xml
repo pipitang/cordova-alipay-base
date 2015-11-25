@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         id="cordova-alipay-base"
-        version="0.0.5">
+        version="0.0.6">
 
   <name>Alipay Basic Mobile Payment Plugin</name>
   <license>MIT license</license>
@@ -17,14 +17,14 @@
   <preference name="ALI_PID"/>
 
   <js-module src="www/alipay.base.js" name="Base">
-    <clobbers target="Alipay" />
+    <merge target="Alipay" />
   </js-module>
 
 
   <platform name="ios">
     <config-file target="config.xml" parent="/*">
       <feature name="AlipayBase">
-        <param name="ios-package" value="CDVAlipay" />
+        <param name="ios-package" value="CDVAlipayBase" />
         <param name="onload" value="true" />
       </feature>
       <preference name="ALI_PID" value="$ALI_PID" />
