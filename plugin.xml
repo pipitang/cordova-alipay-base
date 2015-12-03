@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         id="cordova-alipay-base"
-        version="0.0.6">
+        version="0.0.7">
 
   <name>Alipay Basic Mobile Payment Plugin</name>
   <license>MIT license</license>
@@ -16,8 +16,8 @@
 
   <preference name="ALI_PID"/>
 
-  <js-module src="www/alipay.base.js" name="Base">
-    <merge target="Alipay" />
+  <js-module src="www/alipay.base.js" name="AlipayBase">
+    <merges target="Alipay" />
   </js-module>
 
 

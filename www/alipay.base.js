@@ -1,4 +1,4 @@
-/*global cordova, module*/
+var exec = require('cordova/exec');
 
 module.exports = {
 	Base:{
