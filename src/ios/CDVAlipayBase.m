@@ -62,7 +62,7 @@
 {
     NSURL* url = [notification object];
     
-    if ([url.scheme isEqualToString:self.aliPID] && currentCallbackId != nil)
+    if ([url.scheme rangeOfString:self.aliPID].length > 0 && currentCallbackId != nil)
     {
         //跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
