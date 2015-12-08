@@ -14,7 +14,6 @@
 -(void)pluginInitialize
 {
     self.aliPID = [[self.commandDelegate settings] objectForKey:@"ali_pid"];
-    NSLog(@"Loaded alipay plugin with %@", self.aliPID);
 }
 
 
@@ -45,10 +44,11 @@
     [orderString appendFormat:@"%@=\"%@\"&", @"sign_type", [args objectForKey:@"sign_type"]];
     [orderString deleteCharactersInRange:NSMakeRange([orderString length] -1, 1)];
     
-    NSLog(@"Calling Alipay using %@", orderString);
-    self.currentCallbackId = command.callbackId;
-    [[AlipaySDK defaultService] payOrder:orderString fromScheme:aliPID callback:^(NSDictionary *resultDic) {
-        NSLog(@"Alipay returns immediately with %@",resultDic);
+    
+    NSMutableString * schema = [NSMutableString string];
+    [schema appendFormat:@"ALI%@", self.aliPID];
+    
+    [[AlipaySDK defaultService] payOrder:orderString fromScheme:schema callback:^(NSDictionary *resultDic) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.currentCallbackId = nil;
             CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:resultDic];
@@ -66,7 +66,6 @@
     {
         //跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            NSLog(@"Alipay return from openURL with %@",resultDic);
             dispatch_async(dispatch_get_main_queue(), ^{
                 CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:resultDic];
                 [self.commandDelegate sendPluginResult:pluginResult callbackId:currentCallbackId];
