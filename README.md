@@ -11,7 +11,7 @@ Cordova 支付宝基础功能插件
 1. 运行
 
 ```
-cordova plugin add https://github.com/pipitang/cordova-alipay-base --variables ALI_PID=yourpid
+cordova plugin add https://github.com/pipitang/cordova-alipay-base --variable ALI_PID=yourpid
 
 ```
 
