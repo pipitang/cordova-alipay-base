@@ -27,23 +27,23 @@ cordova plugin add https://github.com/pipitang/cordova-alipay-base --variable AL
 
 ```
 public static String createLinkString(Map<String, String> params, boolean client) {
-List<String> keys = new ArrayList<String>(params.keySet());
-Collections.sort(keys);
+	List<String> keys = new ArrayList<String>(params.keySet());
+	Collections.sort(keys);
 
-StringBuffer buf = new StringBuffer();
+	StringBuffer buf = new StringBuffer();
 
-for (int i = 0; i < keys.size(); i++) {
-String key = keys.get(i);
-String value = params.get(key);
-buf.append(key).append('=');
-if (client) buf.append('"');
-buf.append(value); 
-if (client) buf.append('"');
-buf.append('&');
-}
+	for (int i = 0; i < keys.size(); i++) {
+		String key = keys.get(i);
+		String value = params.get(key);
+		buf.append(key).append('=');
+		if (client) buf.append('"');
+		buf.append(value); 
+		if (client) buf.append('"');
+		buf.append('&');
+	}
 
-buf.deleteCharAt(buf.length()-1);
-return buf.toString();
+	buf.deleteCharAt(buf.length()-1);
+	return buf.toString();
 }
 
 ```
@@ -56,7 +56,7 @@ return buf.toString();
 ### 支付API
 
 
-```Javascript
+```
 
 orderService.checkout(orderId, $scope.selectPay).then(function (parameters) {
     if ('Wechat' === $scope.selectPay) callNativeWexinPayment(parameters); {
@@ -65,13 +65,12 @@ orderService.checkout(orderId, $scope.selectPay).then(function (parameters) {
         else showPaymentError(null);
     }, showPaymentError);
 }
+
 ```
 
 此处第一个参数为json对象，请从服务端获取，直接传给改方法。客户端会对服务端返回的JSON对象属性进行排序，js层不需要关心。具体服务端参数合成，java代码请参照一下内容及阿里官方文档，注意createLinkString上得注释：
 
-···
-
-
+```
 private static Map<String, String> checkoutAlipay(AlipayConfig config, String orderNumber, BigDecimal amount) throws Exception{
     Map<String, String> orderInfo=new HashMap<String,String>();
     orderInfo.put("service", "mobile.securitypay.pay");
@@ -101,9 +100,9 @@ private static Map<String, String> checkoutAlipay(AlipayConfig config, String or
     return orderInfo;
 }
 
+```
 
-
-
+```
 public class AlipayConfig {
 
     private String partnerId;
@@ -153,6 +152,9 @@ public class AlipayConfig {
     }
 }
 
+```
+
+```
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -370,7 +372,7 @@ public abstract class AlipayUtil {
     }
 }
 
-···
+```
 
 # FAQ
 
