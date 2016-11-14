@@ -4,12 +4,11 @@
 
 @interface CDVAlipayBase()
 @property NSString* aliPID;
-@property NSString* currentCallbackId;
 @end
 
 @implementation CDVAlipayBase
 
-@synthesize aliPID, currentCallbackId;
+@synthesize aliPID;
 
 -(void)pluginInitialize
 {
@@ -50,7 +49,6 @@
     
     [[AlipaySDK defaultService] payOrder:orderString fromScheme:schema callback:^(NSDictionary *resultDic) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.currentCallbackId = nil;
             CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:resultDic];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         });
@@ -62,14 +60,13 @@
 {
     NSURL* url = [notification object];
     
-    if ([url.scheme rangeOfString:self.aliPID].length > 0 && currentCallbackId != nil)
+    if ([url.scheme rangeOfString:self.aliPID].length > 0)
     {
         //跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:resultDic];
-                [self.commandDelegate sendPluginResult:pluginResult callbackId:currentCallbackId];
-                currentCallbackId = nil;
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:nil];
             });
         }];
     }
