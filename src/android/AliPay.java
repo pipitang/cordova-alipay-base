@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class AliPay extends CordovaPlugin {
     public static final String RESULT_STATUS = "resultStatus";
@@ -59,9 +60,9 @@ public class AliPay extends CordovaPlugin {
                     Log.d(TAG, "Calling Alipay with: " + parameters);
                     PayTask task = new PayTask(cordova.getActivity());
                     // 调用支付接口，获取支付结果
-                    final String rawResult = task.pay(parameters);
-                    Log.d(TAG, "Alipay returns:" + rawResult);
-                    final JSONObject result = buildPaymentResult(rawResult);
+                    Map<String, String> rawResult = task.payV2(parameters, true);
+                    Log.d(TAG, "Alipay returns:" + rawResult.toString());
+                    final JSONObject result = buildPaymentResult(rawResult.toString());
                     cordova.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
