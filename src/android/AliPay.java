@@ -102,7 +102,7 @@ public class AliPay extends CordovaPlugin {
                 continue;
             }
             buf.append(key).append('=');
-            buf.append('"').append(value).append('"');
+            buf.append(value);
             buf.append('&');
         }
         if (buf.length() > 0) buf.deleteCharAt(buf.length() - 1);
