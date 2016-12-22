@@ -35,12 +35,10 @@
     NSMutableString * orderString = [NSMutableString string];
     //Let's remove the sign and sign_type properties first
     for (NSString * key in sortedKeys) {
-        if ([@"sign" isEqualToString:key] || [@"sign_type" isEqualToString:key]) continue;
+        if ([@"sign" isEqualToString:key]) continue;
         [orderString appendFormat:@"%@=%@&", key, [args objectForKey:key]];
     }
-
     [orderString appendFormat:@"%@=%@&", @"sign", [args objectForKey:@"sign"]];
-    [orderString appendFormat:@"%@=%@&", @"sign_type", [args objectForKey:@"sign_type"]];
     [orderString deleteCharactersInRange:NSMakeRange([orderString length] -1, 1)];
     
     
@@ -54,7 +52,6 @@
         });
     }];
 }
-
 
 - (void)handleOpenURL:(NSNotification *)notification
 {

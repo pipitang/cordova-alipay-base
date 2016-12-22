@@ -62,7 +62,7 @@ public class AliPay extends CordovaPlugin {
                     // 调用支付接口，获取支付结果
                     Map<String, String> rawResult = task.payV2(parameters, true);
                     Log.d(TAG, "Alipay returns:" + rawResult.toString());
-                    final JSONObject result = buildPaymentResult(rawResult.toString());
+                    final JSONObject result = buildPaymentResult(rawResult);
                     cordova.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -86,14 +86,13 @@ public class AliPay extends CordovaPlugin {
         while (itr.hasNext()) {
             String key = itr.next();
             if (TextUtils.isEmpty(key)) continue;;
-            if ("sign".equals(key) || "sign_type".equals(key)) continue;;
+            if ("sign".equals(key)) continue;;
             keys.add(key);
         }
 
-        //Let's sort the order info and attach sign & sign_type to the end
+        //Let's sort the order info and attach sign to the end
         Collections.sort(keys);
         keys.add("sign");
-        keys.add("sign_type");
 
         for (String key : keys){
             String value = args.getString(key);
@@ -109,24 +108,22 @@ public class AliPay extends CordovaPlugin {
         return buf.toString();
     }
 
-
-    private JSONObject buildPaymentResult(String rawResult) throws JSONException {
+    private JSONObject buildPaymentResult(Map<String, String> rawResult) throws JSONException {
         JSONObject result = new JSONObject();
-        String[] resultParams = rawResult.split(";");
-        for (String resultParam : resultParams) {
-            if (resultParam.startsWith(RESULT_STATUS))
-                result.put(RESULT_STATUS, gatValue(resultParam, RESULT_STATUS));
-            if (resultParam.startsWith(RESULT))
-                result.put(RESULT, gatValue(resultParam, RESULT));
-            if (resultParam.startsWith(MEMO)) result.put(MEMO, gatValue(resultParam, MEMO));
+        if (rawResult == null) {
+            return result;
         }
+
+        for (String key : rawResult.keySet()) {
+            if (TextUtils.equals(key, "resultStatus")) {
+                result.put(RESULT_STATUS, rawResult.get(key));
+            } else if (TextUtils.equals(key, "result")) {
+                result.put(RESULT, rawResult.get(key));
+            } else if (TextUtils.equals(key, "memo")) {
+                result.put(MEMO, rawResult.get(key));
+            }
+        }
+
         return result;
     }
-
-
-    private String gatValue(String content, String key) {
-        String prefix = key + "={";
-        return content.substring(content.indexOf(prefix) + prefix.length(), content.lastIndexOf("}"));
-    }
-
 }
