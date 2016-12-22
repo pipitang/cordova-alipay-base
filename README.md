@@ -10,7 +10,7 @@ Cordova 支付宝基础功能插件
 
 0. 背景
 
-本插件来源于 https://github.com/pipitang/cordova-alipay-base，根据最新的SDK做了修正。
+本插件来源于 https://github.com/pipitang/cordova-alipay-base ，根据最新的SDK做了修正。
 
 配套提交了ionic-native插件。
 
