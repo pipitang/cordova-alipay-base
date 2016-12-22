@@ -6,7 +6,7 @@
 
 -(void)pluginInitialize
 {
-    self.appId = [[self.commandDelegate settings] objectForKey:@"ali_pid"];
+    self.appId = [[self.commandDelegate settings] objectForKey:@"app_id"];
 }
 
 

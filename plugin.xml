@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         id="cordova-alipay-base"
-        version="0.0.9">
+        version="0.0.10">
 
   <name>Alipay Basic Mobile Payment Plugin</name>
   <license>MIT license</license>
   <description>阿里支付移动支付Cordova插件</description>
   <keywords>cordova alipay 阿里支付 支付宝</keywords>
-  <repo>https://github.com/pipitang/cordova-alipay-base</repo>
-  <issue>https://github.com/pipitang/cordova-alipay-base/issues</issue>
+  <repo>https://github.com/xueron/cordova-alipay-base</repo>
+  <issue>https://github.com/xueron/cordova-alipay-base/issues</issue>
 
   <engines>
     <engine name="cordova" version=">=3.5.0"/>
   </engines>
 
-  <preference name="ALI_PID"/>
+  <preference name="APP_ID"/>
 
   <js-module src="www/alipay.base.js" name="AlipayBase">
     <merges target="Alipay" />
@@ -27,7 +27,7 @@
         <param name="ios-package" value="CDVAlipayBase" />
         <param name="onload" value="true" />
       </feature>
-      <preference name="ALI_PID" value="$ALI_PID" />
+      <preference name="APP_ID" value="$APP_ID" />
     </config-file>
 
     <config-file target="*-Info.plist" parent="CFBundleURLTypes">
@@ -35,7 +35,7 @@
             <dict>
                 <key>CFBundleURLSchemes</key>
                 <array>
-                    <string>ALI$ALI_PID</string>
+                    <string>ALI$APP_ID</string>
                 </array>
             </dict>
         </array>
